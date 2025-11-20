@@ -1,5 +1,5 @@
 {
-  "name": "tsdatagrid",
+  "name": "@tinisoftin/tsdatagrid",
   "version": "1.0.0",
   "description": "Advanced, feature-rich data grid component for Vue 3 with TypeScript support",
   "type": "module",
@@ -39,16 +39,16 @@
     "odata",
     "components"
   ],
-  "author": "Your Name",
+  "author": "Tinisoft",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/tsdatagrid.git"
+    "url": "https://github.com/tinisoft/tstable.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/tsdatagrid/issues"
+    "url": "https://github.com/tinisoft/tstable/issues"
   },
-  "homepage": "https://github.com/yourusername/tsdatagrid#readme",
+  "homepage": "https://github.com/tinisoft/tstable#readme",
   "peerDependencies": {
     "vue": "^3.3.0"
   },
