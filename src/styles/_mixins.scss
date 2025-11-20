@@ -1,0 +1,99 @@
+// Mixins for common patterns
+
+@mixin truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin scrollbar-thin {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--tsdg-bg-secondary);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--tsdg-border-color-dark);
+    border-radius: var(--tsdg-border-radius);
+
+    &:hover {
+      background: var(--tsdg-text-secondary);
+    }
+  }
+}
+
+@mixin button-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--tsdg-primary);
+    outline-offset: 2px;
+  }
+}
+
+@mixin input-reset {
+  background: var(--tsdg-bg-primary);
+  border: 1px solid var(--tsdg-border-color);
+  border-radius: var(--tsdg-border-radius);
+  padding: var(--tsdg-spacing-sm) var(--tsdg-spacing-md);
+  font-family: var(--tsdg-font-family);
+  font-size: var(--tsdg-font-size-base);
+  line-height: var(--tsdg-line-height);
+  color: var(--tsdg-text-primary);
+  transition: border-color var(--tsdg-transition-fast);
+
+  &:focus {
+    outline: none;
+    border-color: var(--tsdg-primary);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+
+  &:disabled {
+    background: var(--tsdg-bg-secondary);
+    color: var(--tsdg-text-disabled);
+    cursor: not-allowed;
+  }
+}
+
+@mixin cell-padding {
+  padding: var(--tsdg-cell-padding);
+}
+
+@mixin hover-highlight {
+  transition: background-color var(--tsdg-transition-fast);
+
+  &:hover {
+    background-color: var(--tsdg-bg-hover);
+  }
+}
+
+@mixin selected-highlight {
+  background-color: var(--tsdg-bg-selected);
+
+  &:hover {
+    background-color: var(--tsdg-bg-active);
+  }
+}

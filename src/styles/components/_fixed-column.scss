@@ -1,0 +1,71 @@
+@use '../mixins' as *;
+
+.ts-datagrid-fixed-column {
+  display: flex;
+  flex-direction: column;
+  background: var(--tsdg-bg-primary);
+  position: relative;
+
+  &--left {
+    border-right: 2px solid var(--tsdg-border-color-dark);
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+  }
+
+  &--right {
+    border-left: 2px solid var(--tsdg-border-color-dark);
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.05);
+  }
+
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: var(--tsdg-z-sticky);
+    background: var(--tsdg-bg-secondary);
+    border-bottom: 2px solid var(--tsdg-border-color-dark);
+  }
+
+  &__body {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__row {
+    display: flex;
+    min-height: var(--tsdg-row-height);
+    border-bottom: 1px solid var(--tsdg-border-color-light);
+    @include hover-highlight;
+    cursor: pointer;
+
+    &--selected {
+      @include selected-highlight;
+    }
+
+    &--even {
+      background: var(--tsdg-bg-primary);
+    }
+
+    &--odd {
+      background: var(--tsdg-bg-secondary);
+    }
+  }
+
+  &__cell {
+    @include cell-padding;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--tsdg-border-color-light);
+    position: relative;
+    overflow: hidden;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &--selection {
+      width: 48px;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+  }
+}

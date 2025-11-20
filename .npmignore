@@ -1,0 +1,42 @@
+# Source files
+src/
+examples/
+docs/
+
+# Development files
+*.log
+.DS_Store
+node_modules/
+coverage/
+.nyc_output/
+
+# Config files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test files
+**/*.spec.ts
+**/*.test.ts
+__tests__/
+
+# Build configs
+vite.config.ts
+tsconfig.json
+tsconfig.node.json
+.eslintrc.cjs
+.prettierrc
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Development dist
+dist-dev/
+
+# Environment
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,86 @@
+// Base styles and CSS custom properties
+:root {
+  // Colors
+  --tsdg-primary: #007bff;
+  --tsdg-secondary: #6c757d;
+  --tsdg-success: #28a745;
+  --tsdg-danger: #dc3545;
+  --tsdg-warning: #ffc107;
+  --tsdg-info: #17a2b8;
+  --tsdg-light: #f8f9fa;
+  --tsdg-dark: #343a40;
+
+  // Background colors
+  --tsdg-bg-primary: #ffffff;
+  --tsdg-bg-secondary: #f8f9fa;
+  --tsdg-bg-tertiary: #e9ecef;
+  --tsdg-bg-hover: #f1f3f5;
+  --tsdg-bg-selected: #e7f3ff;
+  --tsdg-bg-active: #d0e8ff;
+
+  // Text colors
+  --tsdg-text-primary: #212529;
+  --tsdg-text-secondary: #6c757d;
+  --tsdg-text-muted: #adb5bd;
+  --tsdg-text-disabled: #ced4da;
+
+  // Border colors
+  --tsdg-border-color: #dee2e6;
+  --tsdg-border-color-light: #e9ecef;
+  --tsdg-border-color-dark: #adb5bd;
+
+  // Spacing
+  --tsdg-spacing-xs: 4px;
+  --tsdg-spacing-sm: 8px;
+  --tsdg-spacing-md: 12px;
+  --tsdg-spacing-lg: 16px;
+  --tsdg-spacing-xl: 24px;
+
+  // Typography
+  --tsdg-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --tsdg-font-size-xs: 11px;
+  --tsdg-font-size-sm: 12px;
+  --tsdg-font-size-base: 14px;
+  --tsdg-font-size-lg: 16px;
+  --tsdg-font-size-xl: 18px;
+  --tsdg-font-weight-normal: 400;
+  --tsdg-font-weight-medium: 500;
+  --tsdg-font-weight-semibold: 600;
+  --tsdg-font-weight-bold: 700;
+  --tsdg-line-height: 1.5;
+
+  // Shadows
+  --tsdg-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --tsdg-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --tsdg-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --tsdg-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --tsdg-shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.18);
+
+  // Border radius
+  --tsdg-border-radius-sm: 2px;
+  --tsdg-border-radius: 4px;
+  --tsdg-border-radius-md: 6px;
+  --tsdg-border-radius-lg: 8px;
+
+  // Transitions
+  --tsdg-transition-fast: 150ms ease;
+  --tsdg-transition: 250ms ease;
+  --tsdg-transition-slow: 350ms ease;
+
+  // Z-index
+  --tsdg-z-dropdown: 1000;
+  --tsdg-z-sticky: 1020;
+  --tsdg-z-fixed: 1030;
+  --tsdg-z-modal-backdrop: 1040;
+  --tsdg-z-modal: 1050;
+  --tsdg-z-popover: 1060;
+  --tsdg-z-tooltip: 1070;
+
+  // Grid specific
+  --tsdg-row-height: 40px;
+  --tsdg-header-height: 48px;
+  --tsdg-footer-height: 56px;
+  --tsdg-toolbar-height: 48px;
+  --tsdg-group-panel-height: 52px;
+  --tsdg-cell-padding: 8px 12px;
+}

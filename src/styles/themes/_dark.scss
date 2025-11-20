@@ -1,0 +1,126 @@
+// ===== DARK THEME =====
+// styles/themes/_dark.scss
+.tsdatagrid-theme-dark {
+  // Dark mode colors
+  --tsdg-primary: #90caf9;
+  --tsdg-primary-light: #bbdefb;
+  --tsdg-primary-dark: #42a5f5;
+  --tsdg-primary-contrast: rgba(0, 0, 0, 0.87);
+  
+  --tsdg-secondary: #bdbdbd;
+  --tsdg-secondary-light: #e0e0e0;
+  --tsdg-secondary-dark: #9e9e9e;
+  
+  --tsdg-success: #66bb6a;
+  --tsdg-success-light: #81c784;
+  --tsdg-success-dark: #4caf50;
+  
+  --tsdg-danger: #ef5350;
+  --tsdg-danger-light: #e57373;
+  --tsdg-danger-dark: #f44336;
+  
+  --tsdg-warning: #ffa726;
+  --tsdg-warning-light: #ffb74d;
+  --tsdg-warning-dark: #ff9800;
+  
+  --tsdg-info: #29b6f6;
+  --tsdg-info-light: #4fc3f7;
+  --tsdg-info-dark: #03a9f4;
+
+  // Dark backgrounds
+  --tsdg-bg-primary: #1e1e1e;
+  --tsdg-bg-secondary: #252526;
+  --tsdg-bg-tertiary: #2d2d30;
+  --tsdg-bg-hover: #333333;
+  --tsdg-bg-selected: #264f78;
+  --tsdg-bg-active: #094771;
+  --tsdg-bg-disabled: #2d2d30;
+  --tsdg-bg-overlay: rgba(0, 0, 0, 0.7);
+
+  // Dark backgrounds - grid specific
+  --tsdg-header-bg: #252526;
+  --tsdg-body-bg: #1e1e1e;
+  --tsdg-footer-bg: #252526;
+  --tsdg-toolbar-bg: #2d2d30;
+  --tsdg-group-panel-bg: #2d2d30;
+  --tsdg-row-even-bg: #1e1e1e;
+  --tsdg-row-odd-bg: #252526;
+  --tsdg-row-hover-bg: #2d2d30;
+  --tsdg-row-selected-bg: #264f78;
+  --tsdg-cell-editing-bg: #3e2723;
+
+  // Dark text colors
+  --tsdg-text-primary: #e0e0e0;
+  --tsdg-text-secondary: #9e9e9e;
+  --tsdg-text-muted: #757575;
+  --tsdg-text-disabled: #616161;
+  --tsdg-text-placeholder: #757575;
+
+  // Dark borders
+  --tsdg-border-color: #3e3e42;
+  --tsdg-border-color-light: #2d2d30;
+  --tsdg-border-color-dark: #555555;
+  --tsdg-border-color-hover: #505050;
+
+  // Dark shadows (more subtle)
+  --tsdg-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --tsdg-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --tsdg-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  --tsdg-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.6);
+  --tsdg-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.7);
+  --tsdg-shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.8);
+  --tsdg-shadow-focus: 0 0 0 3px rgba(144, 202, 249, 0.3);
+  --tsdg-shadow-error: 0 0 0 3px rgba(239, 83, 80, 0.3);
+
+  // Dark scrollbar
+  --tsdg-scrollbar-track: #2d2d30;
+  --tsdg-scrollbar-thumb: #505050;
+  --tsdg-scrollbar-thumb-hover: #616161;
+
+  // Dark mode specific adjustments
+  img,
+  svg {
+    filter: brightness(0.9);
+  }
+
+  // Better contrast for interactive elements
+  button,
+  input,
+  select,
+  .ts-datagrid-footer__button,
+  .ts-datagrid-footer__page {
+    &:focus-visible {
+      outline-color: var(--tsdg-primary);
+    }
+  }
+
+  // Selection highlight
+  ::selection {
+    background: var(--tsdg-primary);
+    color: var(--tsdg-primary-contrast);
+  }
+}
+
+// ===== COMPACT SIZE VARIANT =====
+.tsdatagrid-theme-compact {
+  --tsdg-row-height: var(--tsdg-row-height-compact);
+  --tsdg-header-height: var(--tsdg-header-height-compact);
+  --tsdg-footer-height: var(--tsdg-footer-height-compact);
+  --tsdg-cell-padding-x: var(--tsdg-spacing-sm);
+  --tsdg-cell-padding-y: var(--tsdg-spacing-xs);
+  --tsdg-font-size-base: var(--tsdg-font-size-sm);
+}
+
+// ===== COMFORTABLE SIZE VARIANT =====
+.tsdatagrid-theme-comfortable {
+  --tsdg-row-height: var(--tsdg-row-height-comfortable);
+  --tsdg-header-height: var(--tsdg-header-height-comfortable);
+  --tsdg-footer-height: var(--tsdg-footer-height-comfortable);
+  --tsdg-cell-padding-x: var(--tsdg-spacing-lg);
+  --tsdg-cell-padding-y: var(--tsdg-spacing-md);
+  --tsdg-font-size-base: var(--tsdg-font-size-lg);
+}
+
+// ===== THEME COMBINATIONS =====
+// You can combine size and color themes
+// Example: class="tsdatagrid-theme-dark tsdatagrid-theme-compact"

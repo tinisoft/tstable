@@ -1,0 +1,238 @@
+@use '../mixins' as *;
+
+.ts-datagrid-cell {
+  @include cell-padding;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--tsdg-border-color-light);
+  position: relative;
+  overflow: hidden;
+  min-height: var(--tsdg-row-height);
+  flex-shrink: 0;
+
+  // ✅ CRITICAL: Remove ALL default focus styles
+  &:focus {
+    outline: none !important;
+  }
+
+  &:focus-visible {
+    outline: none !important;
+  }
+
+  &:last-child {
+    border-right: none;
+  }
+
+  // Alignment
+  &--left {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  &--center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  &--right {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  // Type-specific styles
+  &--number {
+    font-variant-numeric: tabular-nums;
+    justify-content: flex-end;
+  }
+
+  &--boolean {
+    justify-content: center;
+  }
+
+  &--date,
+  &--datetime {
+    font-variant-numeric: tabular-nums;
+  }
+
+  // States
+  &--editing {
+    padding: 0;
+    background: var(--tsdg-bg-primary);
+    box-shadow: inset 0 0 0 2px var(--tsdg-primary);
+    z-index: 20;
+    overflow: visible;
+    outline: none !important;
+  }
+
+  &--editable {
+    cursor: text;
+
+    &:hover:not(.ts-datagrid-cell--editing) {
+      .ts-datagrid-cell__edit-icon {
+        opacity: 1;
+      }
+    }
+  }
+
+  // ✅ ONLY show focus when keyboard nav is active AND cell is focused
+  &--focused {
+    // No focus by default (mouse clicks won't trigger this class anyway)
+  }
+
+  &--batch-editing {
+    background: #fffbf0;
+    
+    &:hover {
+      background: #fff8e1;
+    }
+  }
+
+  &--modified {
+    background: #e8f5e9;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 8px 8px 0 0;
+      border-color: var(--tsdg-success) transparent transparent transparent;
+    }
+  }
+
+  // Display mode
+  &__display {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    @include truncate-text;
+    padding-right: 24px;
+  }
+
+  &__edit-icon {
+    @include button-reset;
+    @include flex-center;
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: var(--tsdg-border-radius-sm);
+    color: var(--tsdg-text-muted);
+    opacity: 0;
+    transition: opacity var(--tsdg-transition-fast);
+
+    &:hover {
+      background: var(--tsdg-bg-hover);
+      color: var(--tsdg-text-primary);
+      opacity: 1;
+    }
+  }
+
+  &__modified-indicator {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: var(--tsdg-success);
+    font-weight: var(--tsdg-font-weight-bold);
+    font-size: var(--tsdg-font-size-lg);
+    line-height: 1;
+  }
+
+  // Edit mode
+  &__edit {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: var(--tsdg-spacing-xs);
+  }
+
+  &__input,
+  &__select,
+  &__checkbox {
+    @include input-reset;
+    
+    &:focus {
+      box-shadow: none;
+      border-color: transparent;
+      outline: none;
+    }
+  }
+
+  &__input,
+  &__select {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    padding: var(--tsdg-spacing-sm);
+  }
+
+  &__actions {
+    display: flex;
+    gap: 4px;
+    padding-right: var(--tsdg-spacing-sm);
+    flex-shrink: 0;
+  }
+
+  &__action {
+    @include button-reset;
+    @include flex-center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--tsdg-border-radius-sm);
+    transition: background-color var(--tsdg-transition-fast);
+
+    &--save {
+      color: var(--tsdg-success);
+
+      &:hover {
+        background: #e8f5e9;
+      }
+    }
+
+    &--cancel {
+      color: var(--tsdg-text-secondary);
+
+      &:hover {
+        background: var(--tsdg-bg-hover);
+      }
+    }
+  }
+
+  // Validation error
+  &__error {
+    @include flex-center;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 18px;
+    height: 18px;
+    background: var(--tsdg-danger);
+    color: white;
+    border-radius: 50%;
+    font-size: var(--tsdg-font-size-xs);
+    font-weight: var(--tsdg-font-weight-bold);
+    cursor: help;
+    z-index: 1;
+  }
+}
+
+// ✅ KEYBOARD NAVIGATION: Only show focus when explicitly using keyboard
+.ts-datagrid--keyboard-nav {
+  .ts-datagrid-cell--focused {
+    outline: 2px solid var(--tsdg-primary, #3498db) !important;
+    outline-offset: -2px;
+    z-index: 2;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  }
+}

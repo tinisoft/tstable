@@ -1,0 +1,604 @@
+// ===== _body.scss - COMPLETE IMPLEMENTATION =====
+@use '../mixins' as *;
+
+.ts-datagrid-body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  // ===== ROWS CONTAINER =====
+  &__rows-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    // ✅ Performance optimization for virtual scrolling
+    .ts-datagrid--virtualized & {
+      contain: layout style paint;
+      will-change: contents;
+      
+      // GPU acceleration
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    
+    // ✅ Smooth infinite scroll
+    .ts-datagrid--infinite-scroll & {
+      will-change: transform;
+    }
+  }
+
+  // ===== VIRTUAL SPACERS =====
+  &__virtual-spacer {
+    width: 100%;
+    pointer-events: none;
+    flex-shrink: 0;
+    
+    // ✅ Performance optimizations
+    will-change: height;
+    contain: strict;
+    
+    // ✅ Prevent layout shifts
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    min-height: 0;
+    
+    // ✅ GPU acceleration
+    transform: translateZ(0);
+    
+    // ✅ Top spacer specific
+    &--top {
+      order: -1; // Ensure it's first
+      
+      // Debug mode
+      // background: linear-gradient(to bottom, rgba(0, 255, 0, 0.05), transparent);
+      // border-bottom: 1px dashed rgba(0, 255, 0, 0.3);
+    }
+    
+    // ✅ Bottom spacer specific
+    &--bottom {
+      order: 9999; // Ensure it's last
+      
+      // Debug mode
+      // background: linear-gradient(to top, rgba(0, 0, 255, 0.05), transparent);
+      // border-top: 1px dashed rgba(0, 0, 255, 0.3);
+    }
+    
+    // ✅ Show measurements in debug mode
+    &[data-offset]::before {
+      // Uncomment to debug
+      // content: attr(data-offset) 'px';
+      // position: absolute;
+      // right: 10px;
+      // top: 50%;
+      // transform: translateY(-50%);
+      // background: rgba(0, 0, 0, 0.8);
+      // color: white;
+      // padding: 2px 8px;
+      // border-radius: 4px;
+      // font-size: 11px;
+      // font-family: monospace;
+      // z-index: 1000;
+    }
+  }
+
+  // ===== INFINITE SCROLL ELEMENTS =====
+  
+  // Scroll sentinel (observed by Intersection Observer)
+  &__scroll-sentinel {
+    position: relative;
+    height: 1px;
+    width: 100%;
+    pointer-events: none;
+    visibility: hidden;
+    
+    // Debug mode
+    // visibility: visible !important;
+    // height: 20px !important;
+    // background: repeating-linear-gradient(
+    //   45deg,
+    //   rgba(255, 0, 0, 0.1),
+    //   rgba(255, 0, 0, 0.1) 10px,
+    //   rgba(0, 0, 255, 0.1) 10px,
+    //   rgba(0, 0, 255, 0.1) 20px
+    // );
+    // border: 2px dashed red;
+    
+    &::before {
+      // Debug label
+      // content: 'SENTINEL (Page ' attr(data-page) ')';
+      // position: absolute;
+      // left: 50%;
+      // top: 50%;
+      // transform: translate(-50%, -50%);
+      // background: red;
+      // color: white;
+      // padding: 4px 12px;
+      // border-radius: 4px;
+      // font-size: 10px;
+      // font-weight: bold;
+      // white-space: nowrap;
+      // z-index: 1000;
+    }
+  }
+  
+  // Loading more indicator
+  &__loading-more {
+    @include flex-center;
+    padding: var(--tsdg-spacing-lg);
+    gap: var(--tsdg-spacing-sm);
+    color: var(--tsdg-text-secondary);
+    font-size: var(--tsdg-font-size-sm);
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(0, 0, 0, 0.02),
+      transparent
+    );
+    border-top: 1px solid var(--tsdg-border-color-light);
+    border-bottom: 1px solid var(--tsdg-border-color-light);
+    animation: tsdg-pulse 1.5s ease-in-out infinite;
+    
+    span {
+      font-weight: var(--tsdg-font-weight-medium);
+    }
+  }
+  
+  // No more data indicator
+  &__no-more {
+    @include flex-center;
+    padding: var(--tsdg-spacing-lg);
+    color: var(--tsdg-text-muted);
+    font-size: var(--tsdg-font-size-sm);
+    border-top: 2px solid var(--tsdg-border-color);
+    background: var(--tsdg-bg-tertiary);
+    
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--tsdg-spacing-xs);
+      font-weight: var(--tsdg-font-weight-medium);
+      
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background: var(--tsdg-success);
+        border-radius: 50%;
+        opacity: 0.6;
+      }
+    }
+  }
+
+  // ===== LOADING & EMPTY STATES =====
+  &__loading,
+  &__empty {
+    @include flex-center;
+    min-height: 300px;
+    color: var(--tsdg-text-secondary);
+    flex-direction: column;
+    gap: var(--tsdg-spacing-lg);
+    padding: var(--tsdg-spacing-xl);
+  }
+
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--tsdg-border-color);
+    border-top-color: var(--tsdg-primary);
+    border-radius: 50%;
+    animation: tsdg-spin 0.8s linear infinite;
+    
+    // Small variant for infinite scroll
+    &--small {
+      width: 24px;
+      height: 24px;
+      border-width: 2px;
+    }
+  }
+
+  &__empty-message {
+    text-align: center;
+    
+    svg {
+      opacity: 0.3;
+      margin-bottom: var(--tsdg-spacing-md);
+    }
+
+    p {
+      margin: 0;
+      font-size: var(--tsdg-font-size-lg);
+      color: var(--tsdg-text-muted);
+    }
+  }
+
+  // ===== ROW STYLES =====
+&__row {
+  display: flex;
+  min-height: var(--tsdg-row-height);
+  border-bottom: 1px solid var(--tsdg-border-color-light);
+  transition: background-color var(--tsdg-transition-fast);
+  cursor: pointer;
+  
+  // ✅ Remove ALL default focus styles
+  &:focus {
+    outline: none !important;
+  }
+  
+  &:focus-visible {
+    outline: none !important;
+  }
+
+  &:hover {
+    background-color: var(--tsdg-bg-hover);
+  }
+
+  &--selected {
+    background-color: var(--tsdg-bg-selected);
+    
+    &:hover {
+      background-color: var(--tsdg-bg-active);
+    }
+  }
+
+    // ✅ Only show focus ring for keyboard navigation
+.ts-datagrid--keyboard-nav {
+  // Only show focus if user has actually used keyboard (not just enabled)
+  &.ts-datagrid--has-keyboard-focus {
+    .ts-datagrid-body__row--focused {
+      outline: 2px solid var(--tsdg-primary) !important;
+      outline-offset: -2px;
+      z-index: 1;
+      background-color: rgba(52, 152, 219, 0.05);
+    }
+  }
+}
+
+    
+    // ✅ Performance optimization for virtual scrolling
+    .ts-datagrid--virtualized & {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      contain: layout style paint;
+    }
+    
+    // ✅ Smooth appearance in infinite scroll
+    .ts-datagrid--infinite-scroll & {
+      animation: tsdg-slide-in 0.2s ease-out;
+    }
+
+    &--selected {
+      @include selected-highlight;
+    }
+
+    &--even {
+      background: var(--tsdg-bg-primary);
+    }
+
+    &--odd {
+      background: var(--tsdg-bg-secondary);
+    }
+
+    &--editing {
+      background: #fff8e1;
+      border-color: var(--tsdg-warning);
+      box-shadow: inset 0 0 0 1px var(--tsdg-warning);
+    }
+
+    &--batch-editing {
+      background: #fffbf0;
+    }
+    
+    &--focused {
+      outline: 2px solid var(--tsdg-primary);
+      outline-offset: -2px;
+      z-index: 1;
+    }
+  }
+
+  // ===== GROUP STYLES =====
+  &__group-row {
+    display: flex;
+    align-items: center;
+    min-height: var(--tsdg-row-height);
+    background: var(--tsdg-bg-tertiary);
+    border-bottom: 1px solid var(--tsdg-border-color);
+    font-weight: var(--tsdg-font-weight-semibold);
+    cursor: pointer;
+    @include hover-highlight;
+    position: sticky;
+    top: var(--tsdg-header-height);
+    z-index: calc(var(--tsdg-z-sticky) - 1);
+  }
+
+  &__group-cell {
+    @include cell-padding;
+    display: flex;
+    align-items: center;
+    gap: var(--tsdg-spacing-sm);
+    width: 100%;
+  }
+
+  &__group-toggle {
+    @include button-reset;
+    @include flex-center;
+    width: 20px;
+    height: 20px;
+    transition: transform var(--tsdg-transition-fast);
+    flex-shrink: 0;
+
+    &--expanded {
+      transform: rotate(90deg);
+    }
+
+    svg {
+      display: block;
+      fill: currentColor;
+    }
+  }
+
+  &__group-title {
+    font-size: var(--tsdg-font-size-base);
+    color: var(--tsdg-text-primary);
+  }
+
+  &__group-count {
+    color: var(--tsdg-text-secondary);
+    font-size: var(--tsdg-font-size-sm);
+    font-weight: var(--tsdg-font-weight-normal);
+    margin-left: var(--tsdg-spacing-xs);
+  }
+
+  // ===== GROUP FOOTER & SUMMARY =====
+  &__group-footer {
+    display: flex;
+    min-height: calc(var(--tsdg-row-height) * 0.9);
+    background: linear-gradient(to bottom, #f8f9fa 0%, #f0f2f5 100%);
+    border-bottom: 2px solid var(--tsdg-border-color);
+    border-top: 1px solid var(--tsdg-border-color-light);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, #1976d2, #1565c0);
+    }
+  }
+
+  &__group-summary {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  &__group-summary-cell {
+    @include cell-padding;
+    display: flex;
+    align-items: center;
+    font-weight: var(--tsdg-font-weight-medium);
+    font-size: var(--tsdg-font-size-sm);
+    color: var(--tsdg-text-primary);
+    border-right: 1px solid var(--tsdg-border-color-light);
+    min-height: inherit;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &--number {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+      color: #1976d2;
+      font-weight: var(--tsdg-font-weight-semibold);
+    }
+
+    &--left {
+      justify-content: flex-start;
+      text-align: left;
+    }
+
+    &--center {
+      justify-content: center;
+      text-align: center;
+    }
+
+    &--right {
+      justify-content: flex-end;
+      text-align: right;
+    }
+
+    &:empty::after {
+      content: '—';
+      color: var(--tsdg-text-muted);
+      opacity: 0.5;
+    }
+  }
+
+  // ===== ROW EXPANSION =====
+&__cell {
+  @include cell-padding;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--tsdg-border-color-light);
+  position: relative;
+  overflow: hidden;
+
+  // ✅ Remove all default focus
+  &:focus {
+    outline: none !important;
+  }
+
+  &:focus-visible {
+    outline: none !important;
+  }
+
+  &:last-child {
+    border-right: none;
+  }
+
+    &--selection {
+      width: 48px;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 0;
+    }
+
+    &--expansion {
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 0;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+
+  &__expand-toggle {
+    @include button-reset;
+    @include flex-center;
+    width: 24px;
+    height: 24px;
+    transition: transform var(--tsdg-transition-fast);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    &--expanded {
+      transform: rotate(90deg);
+    }
+
+    svg {
+      display: block;
+      fill: currentColor;
+    }
+  }
+
+  &__detail-row {
+    border-bottom: 1px solid var(--tsdg-border-color);
+    background: #fafafa;
+    animation: tsdg-expand 0.2s ease-out;
+  }
+
+  &__detail-content {
+    padding: var(--tsdg-spacing-md);
+  }
+
+  &__checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+}
+
+// ===== ROW COMPONENT =====
+.ts-datagrid-row {
+  display: contents;
+}
+
+// ===== ANIMATIONS =====
+@keyframes tsdg-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes tsdg-expand {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+@keyframes tsdg-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes tsdg-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===== PERFORMANCE OPTIMIZATIONS =====
+.ts-datagrid--virtualized {
+  .ts-datagrid-body__row {
+    // ✅ GPU acceleration
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    
+    // ✅ Reduce repaints
+    contain: layout style paint;
+    
+    // ✅ Optimize rendering
+    will-change: transform;
+  }
+  
+  .ts-datagrid-body__virtual-spacer {
+    // ✅ Optimize spacer rendering
+    content-visibility: auto;
+    contain-intrinsic-size: auto 0px;
+  }
+}
+
+// ===== INFINITE SCROLL OPTIMIZATIONS =====
+.ts-datagrid--infinite-scroll {
+  .ts-datagrid-body__rows-container {
+    // ✅ Smooth scrolling
+    will-change: transform;
+  }
+  
+  .ts-datagrid-body__row {
+    // ✅ Optimize new row rendering
+    contain: layout style;
+  }
+}
+
+// ===== ACCESSIBILITY =====
+.ts-datagrid-body {
+  &__row {
+    &:focus-visible {
+      outline: 2px solid var(--tsdg-primary);
+      outline-offset: -2px;
+      z-index: 1;
+    }
+  }
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 768px) {
+  .ts-datagrid-body {
+    &__loading-more,
+    &__no-more {
+      padding: var(--tsdg-spacing-md);
+      font-size: var(--tsdg-font-size-xs);
+    }
+  }
+}

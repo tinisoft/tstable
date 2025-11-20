@@ -1,0 +1,22 @@
+// styles/themes/_default.scss
+.tsdatagrid-theme-default {
+  // Default theme (already defined in base, just overrides if needed)
+  --tsdg-primary: #007bff;
+  --tsdg-primary-light: #4da3ff;
+  --tsdg-primary-dark: #0056b3;
+  
+  --tsdg-bg-primary: #ffffff;
+  --tsdg-bg-secondary: #f8f9fa;
+  --tsdg-bg-tertiary: #e9ecef;
+  --tsdg-bg-hover: #f1f3f5;
+  --tsdg-bg-selected: #e7f3ff;
+  --tsdg-bg-active: #d0e8ff;
+  
+  --tsdg-text-primary: #212529;
+  --tsdg-text-secondary: #6c757d;
+  --tsdg-text-muted: #adb5bd;
+  
+  --tsdg-border-color: #dee2e6;
+  --tsdg-border-color-light: #e9ecef;
+  --tsdg-border-color-dark: #adb5bd;
+}
